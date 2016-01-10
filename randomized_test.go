@@ -15,7 +15,7 @@ type weight struct {
 func BenchmarkRandomized(b *testing.B) {
 	b.StopTimer()
 
-	lists := []*weight{&weight{weight: 1.0}, &weight{weight: 3.0}, &weight{weight: 5.0}, &weight{weight: 1.0}}
+	lists := []*weight{&weight{weight: 0.2}, &weight{weight: 0.3}, &weight{weight: 0.4}, &weight{weight: 0.1}}
 
 	totalW := 0.0
 	for _, v := range lists {
@@ -28,9 +28,9 @@ func BenchmarkRandomized(b *testing.B) {
 	b.StartTimer()
 
 	for i := 0; i < b.N; i++ {
-		rTotalW := rand.Float64() * totalW
+		random := rand.Float64()
 		for i := len(lists) - 1; i >= 0; i-- {
-			if lists[i].threshold <= rTotalW {
+			if lists[i].threshold <= random {
 				lists[i].count++
 				break
 			}
@@ -45,7 +45,7 @@ type weightInt struct {
 
 func BenchmarkRandomizedInt(b *testing.B) {
 	b.StopTimer()
-	lists := []*weightInt{&weightInt{1, 0}, &weightInt{3, 0}, &weightInt{3, 0}, &weightInt{3, 0}, &weightInt{5, 0}, &weightInt{5, 0}, &weightInt{5, 0}, &weightInt{5, 0}, &weightInt{5, 0}, &weightInt{1, 0}}
+	lists := []*weightInt{&weightInt{2, 0}, &weightInt{2, 0}, &weightInt{3, 0}, &weightInt{3, 0}, &weightInt{3, 0}, &weightInt{4, 0}, &weightInt{4, 0}, &weightInt{4, 0}, &weightInt{4, 0}, &weightInt{1, 0}}
 	rand.Seed(time.Now().UnixNano())
 
 	b.StartTimer()
